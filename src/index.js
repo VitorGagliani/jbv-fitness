@@ -6,6 +6,7 @@ import cors from 'cors';
 import path from 'path';
 
 import { fileURLToPath } from 'url';
+//import usuarioRoutes from './routes/usuarioRoutes.js';
 
 const app = express()
 const __filename = fileURLToPath(import.meta.url);
@@ -38,7 +39,7 @@ app.get('/', (req, res) => {
 
 const apiPrefix = '/api';
 
-app.use(`${apiPrefix}/usuarios`, require('./routes/usuarioRoutes'));
+//app.use(`${apiPrefix}/usuarios`, require('./routes/usuarioRoutes'));
 
 app.use((err, req, res, next) =>{
   console.error(err.stack);

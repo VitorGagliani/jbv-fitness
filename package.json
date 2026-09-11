@@ -1,5 +1,6 @@
 {
   "name": "jbvfitness",
+  "type": "module",
   "version": "1.0.0",
   "description": "Projeto integrador SENAC",
   "main": "index.js",
