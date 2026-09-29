@@ -1,29 +1,26 @@
-import db from '../cb/db.js';
+﻿import db from '../db/db.js';
 
-export const findAll = async (status, codigoUsuario, formaPagamento, formaEntrega) => {
+export const findAll = async (filtros = {}) => {
+    const { codigoPedido, status, codigoUsuario, formaPagamento, formaEntrega } = filtros;
     let sql = 'SELECT * FROM pedido';
     const conditions = [];
     const values = [];
 
-    if (status) {
-        conditions.push('status = ?');
-        values.push(status);
-    }
-    if (codigoUsuario) {
-        conditions.push('codigoUsuario = ?');
-        values.push(codigoUsuario);
-    }
-    if (formaPagamento) {
-        conditions.push('formaPagamento = ?');
-        values.push(formaPagamento);
-    }
-    if (formaEntrega) {
-        conditions.push('formaEntrega = ?');
-        values.push(formaEntrega);
+    for (const [column, value] of Object.entries({
+        codigoPedido,
+        status,
+        codigoUsuario,
+        formaPagamento,
+        formaEntrega,
+    })) {
+        if (value !== undefined && value !== null && value !== '') {
+            conditions.push(`${column} = ?`);
+            values.push(value);
+        }
     }
 
-    if (conditions.length > 0) {
-        sql += ' WHERE ' + conditions.join(' AND ');
+    if (conditions.length) {
+        sql += ` WHERE ${conditions.join(' AND ')}`;
     }
 
     const [rows] = await db.query(sql, values);
@@ -36,11 +33,17 @@ export const create = async (pedidoData) => {
 };
 
 export const update = async (codigoPedido, pedidoData) => {
-    const [result] = await db.query('UPDATE pedido SET ? WHERE codigoPedido = ?', [pedidoData, codigoPedido]);
+    const [result] = await db.query(
+        'UPDATE pedido SET ? WHERE codigoPedido = ?',
+        [pedidoData, codigoPedido]
+    );
     return result.affectedRows > 0;
 };
 
 export const remove = async (codigoPedido) => {
-    const [result] = await db.query('DELETE FROM pedido WHERE codigoPedido = ?', [codigoPedido]);
+    const [result] = await db.query(
+        'DELETE FROM pedido WHERE codigoPedido = ?',
+        [codigoPedido]
+    );
     return result.affectedRows > 0;
 };
