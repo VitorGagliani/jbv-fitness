@@ -9,7 +9,9 @@ import { fileURLToPath } from 'url';
 import usuarioRoutes from '../src/routes/usuarioRoutes.js';
 import authRoutes from '../src/routes/authRoutes.js';
 import produtoRoutes from '../src/routes/produtoRoutes.js';
-
+import itemPedidoRoutes from '../src/routes/itemPedidoRoutes.js';
+import pedidoRoutes from '../src/routes/pedidoRouters.js';
+import categoriaRoutes from '../src/routes/categoriaRouters.js';
 
 const app = express()
 const __filename = fileURLToPath(import.meta.url);
@@ -45,6 +47,9 @@ const apiPrefix = '/api';
 app.use(`${apiPrefix}/usuarios`, usuarioRoutes);
 app.use(`${apiPrefix}/login`, authRoutes);
 app.use(`${apiPrefix}/produtos`, produtoRoutes);
+app.use(`${apiPrefix}/pedidoItem`, itemPedidoRoutes);
+app.use(`${apiPrefix}/categorias`, categoriaRoutes);
+app.use(`${apiPrefix}/pedidos`, pedidoRoutes);
 
 
 app.use((err, req, res, next) =>{

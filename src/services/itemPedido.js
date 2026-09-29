@@ -1,3 +1,5 @@
+import db from '../db/db.js';
+
 export const findAll = async (codigoPedido, codigoProduto, quantidade) => {
     let sql = 'SELECT * FROM item_pedido';
     const conditions = [];
@@ -28,9 +30,14 @@ export const findAll = async (codigoPedido, codigoProduto, quantidade) => {
 }
 
 export const create = async (itemPedidoData) => {
-    await db.query('INSERT INTO item_pedido SET ?', itemPedidoData);
-    return itemPedidoData;
-}
+    const { valorUnitario, quantidade } = itemPedidoData;
+    const subtotal = Number((valorUnitario * quantidade).toFixed(2));
+
+    const novoItem = { ...itemPedidoData, subtotal };
+
+    await db.query('INSERT INTO item_pedido SET ?', novoItem);
+    return novoItem;
+};
 
 export const update = async (codigoPedido, itemPedidoData) => {
     const [result] = await db.query('UPDATE item_pedido SET ? WHERE codigoPedido = ?', [itemPedidoData, codigoPedido]);
