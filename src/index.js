@@ -6,7 +6,10 @@ import cors from 'cors';
 import path from 'path';
 
 import { fileURLToPath } from 'url';
-//import usuarioRoutes from './routes/usuarioRoutes.js';
+import usuarioRoutes from '../src/routes/usuarioRoutes.js';
+import authRoutes from '../src/routes/authRoutes.js';
+import produtoRoutes from '../src/routes/produtoRoutes.js';
+
 
 const app = express()
 const __filename = fileURLToPath(import.meta.url);
@@ -39,7 +42,10 @@ app.get('/', (req, res) => {
 
 const apiPrefix = '/api';
 
-//app.use(`${apiPrefix}/usuarios`, require('./routes/usuarioRoutes'));
+app.use(`${apiPrefix}/usuarios`, usuarioRoutes);
+app.use(`${apiPrefix}/login`, authRoutes);
+app.use(`${apiPrefix}/produtos`, produtoRoutes);
+
 
 app.use((err, req, res, next) =>{
   console.error(err.stack);
