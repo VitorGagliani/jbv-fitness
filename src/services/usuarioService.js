@@ -56,7 +56,7 @@ export const create = async (usuarioData) => {
     return newUsuario;
 }
 
-export const update = async (usuarioData, codigo) => {
+export const update = async (codigo, usuarioData) => {
     if(usuarioData.senha){
         const saltRounds = 10;
         usuarioData.senha = await bcrypt.hash(usuarioData.senha, saltRounds);
