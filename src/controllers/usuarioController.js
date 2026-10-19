@@ -80,8 +80,14 @@ export const atualizarUsuario = async (req, res) => {
 export const deletarUsuario = async (req, res) => {
     try {
         const { codigoUsuario } = req.params;
-        const deleted = await usuarioService.delete(codigoUsuario);
+        const deleted = await usuarioService.remove(codigoUsuario);
+        if (!deleted) {
+            return res.status(404).json({ error: 'Usuário não encontrado'});
+        }
+        res.status(200).json({ message: 'Cliente deletado com sucesso'});
     } catch (error) {
         res.status(500).json({ error: 'Erro ao deletar usuário' });
+        console.log(error);
+        
     }
 };

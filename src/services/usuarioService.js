@@ -62,11 +62,11 @@ export const update = async (codigo, usuarioData) => {
         usuarioData.senha = await bcrypt.hash(usuarioData.senha, saltRounds);
     }
 
-    const [result] = await db.query('UPDATE usuario SET ? WHERE codigo = ?', [usuarioData, codigo]);
+    const [result] = await db.query('UPDATE usuario SET ? WHERE codigoUsuario = ?', [usuarioData, codigo]);
     return result.affectedRows > 0;
 };
 
 export const remove = async (codigo) => {
-    const [result] = await db.query('DELETE FROM usuario WHERE codigo = ?', [codigo]);
+    const [result] = await db.query('DELETE FROM usuario WHERE codigoUsuario = ?', [codigo]);
     return result.affectedRows > 0
 }
