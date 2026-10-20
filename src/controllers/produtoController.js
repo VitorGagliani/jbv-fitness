@@ -115,7 +115,7 @@ export const excluirProduto = async (req, res) => {
             return res.status(400).json({ erro: 'codigoProduto é obrigatório.' });
         }
  
-        const removido = await produtoService.remove(Number(codigoProduto));
+        const removido = await produtoService.remove(codigoProduto);
  
         if (!removido) {
             return res.status(404).json({ erro: 'Produto não encontrado.' });
@@ -123,6 +123,7 @@ export const excluirProduto = async (req, res) => {
  
         return res.status(204).send();
     } catch (error) {
+        console.error('Erro ao excluir produto:', error);
         return handleError(res, error);
     }
 };

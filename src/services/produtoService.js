@@ -107,9 +107,6 @@ export const update = async (codigoProduto, produtoData) => {
 };
  
 export const remove = async (codigoProduto) => {
-    if (codigoProduto === undefined || codigoProduto === null || codigoProduto === '') {
-        throw new Error('codigoProduto é obrigatório.');
-    }
  
     const [result] = await db.query(
         'DELETE FROM produto WHERE codigoProduto = ?',
