@@ -120,6 +120,10 @@ export const excluirProduto = async (req, res) => {
         if (!removido) {
             return res.status(404).json({ erro: 'Produto não encontrado.' });
         }
+
+        res.status(200).json({ message: `Produto ${codigoProduto} excluído com sucesso.` });
+
+        
  
         return res.status(204).send();
     } catch (error) {
