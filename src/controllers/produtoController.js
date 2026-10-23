@@ -110,6 +110,8 @@ export const atualizarProduto = async (req, res) => {
 export const excluirProduto = async (req, res) => {
     try {
         const { codigoProduto } = req.params;
+
+        const produto = await produtoService.findAll({ codigoProduto });
  
         if (!codigoProduto) {
             return res.status(400).json({ erro: 'codigoProduto é obrigatório.' });
@@ -121,11 +123,11 @@ export const excluirProduto = async (req, res) => {
             return res.status(404).json({ erro: 'Produto não encontrado.' });
         }
 
-        res.status(200).json({ message: `Produto ${codigoProduto} excluído com sucesso.` });
+        res.status(200).json({ message: `Produto ${codigoProduto} - ${produto[0].nome} excluído com sucesso.` });
 
         
  
-        return res.status(204).send();
+        return res.status(200).send();
     } catch (error) {
         console.error('Erro ao excluir produto:', error);
         return handleError(res, error);
